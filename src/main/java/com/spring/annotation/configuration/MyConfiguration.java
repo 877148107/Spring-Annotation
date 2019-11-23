@@ -11,7 +11,6 @@ import org.springframework.context.annotation.*;
 
 
 /**
- * ??
  *
  * @ClassName: Color
  * =================================================
@@ -26,9 +25,8 @@ import org.springframework.context.annotation.*;
  * =================================================
  * CreateInfo:
  * @Author: William.Wangmy
- * @CreateDate: 2019/11/20 23:14????????
+ * @CreateDate: 2019/11/20 23:14
  * @Version: V1.0
- * ????
  */
 @Configuration
 @ComponentScan(value = {"com.spring.annotation.dao"})
