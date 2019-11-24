@@ -1,3 +1,4 @@
+doc目录下为Spring的官方文档
 Spring注解：
 @Configuration:告诉Spring这是一个配置类,相当于原来的xml配置文件
 @Bean:给Spring容器中注册一个bean

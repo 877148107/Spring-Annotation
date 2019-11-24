@@ -6,7 +6,7 @@ import com.spring.annotation.bean.Person;
 import com.spring.annotation.conditional.MyConditional;
 import com.spring.annotation.impor.MyDefinitionRegistrar;
 import com.spring.annotation.impor.MyImportSelector;
-import com.spring.annotation.service.annotationService;
+import com.spring.annotation.service.AnnotationService;
 import org.springframework.context.annotation.*;
 
 
@@ -14,13 +14,13 @@ import org.springframework.context.annotation.*;
  *
  * @ClassName: Color
  * =================================================
- * @Description: Spring×¢½âÇı¶¯
- *  *@Configuration:¸æËßSpringÕâÊÇÒ»¸öÅäÖÃÀà,Ïàµ±ÓÚÔ­À´µÄxmlÅäÖÃÎÄ¼ş
- *  *@ComponentScan:Ö¸¶¨ÒªÉ¨ÃèµÄ°ü£¬»á°ÑÕâ¸ö°üÏÂÃæ×¢½âµÄ×é¼şÌí¼Óµ½ÈİÆ÷ÖĞ
- *  *@Import:¿ìËÙ¸øÈİÆ÷ÖĞµ¼ÈëÒ»¸ö×é¼ş,ÈİÆ÷ÖĞ¾Í»á×Ô¶¯×¢²áÕâ¸ö×é¼ş£¬idÄ¬ÈÏÊÇÈ«ÀàÃû
- *  *@MyImportSelector:×Ô¶¨ÒåÂß¼­·µ»ØĞèÒªµ¼ÈëµÄ×é¼ş
- *  *@MyDefinitionRegistrar:×Ô¶¨ÒåÊÖ¶¯×¢²ábeanµ½ÈİÆ÷ÖĞ
- *  *»¹¿ÉÒÔÊÇFactoryBean×¢²ábean£¬1.Ä¬ÈÏ»ñÈ¡µ½µÄÊÇ¹¤³§beanµ÷ÓÃgetObject´´½¨µÄ¶ÔÏó£¬2.Òª»ñÈ¡¹¤³§Bean±¾Éí£¬ÎÒÃÇĞèÒª¸øidÇ°Ãæ¼ÓÒ»¸ö&
+ * @Description: Springæ³¨è§£é©±åŠ¨
+ *  *@Configuration:å‘Šè¯‰Springè¿™æ˜¯ä¸€ä¸ªé…ç½®ç±»,ç›¸å½“äºåŸæ¥çš„xmlé…ç½®æ–‡ä»¶
+ *  *@ComponentScan:æŒ‡å®šè¦æ‰«æçš„åŒ…ï¼Œä¼šæŠŠè¿™ä¸ªåŒ…ä¸‹é¢æ³¨è§£çš„ç»„ä»¶æ·»åŠ åˆ°å®¹å™¨ä¸­
+ *  *@Import:å¿«é€Ÿç»™å®¹å™¨ä¸­å¯¼å…¥ä¸€ä¸ªç»„ä»¶,å®¹å™¨ä¸­å°±ä¼šè‡ªåŠ¨æ³¨å†Œè¿™ä¸ªç»„ä»¶ï¼Œidé»˜è®¤æ˜¯å…¨ç±»å
+ *  *@MyImportSelector:è‡ªå®šä¹‰é€»è¾‘è¿”å›éœ€è¦å¯¼å…¥çš„ç»„ä»¶
+ *  *@MyDefinitionRegistrar:è‡ªå®šä¹‰æ‰‹åŠ¨æ³¨å†Œbeanåˆ°å®¹å™¨ä¸­
+ *  *è¿˜å¯ä»¥æ˜¯FactoryBeanæ³¨å†Œbeanï¼Œ1.é»˜è®¤è·å–åˆ°çš„æ˜¯å·¥å‚beanè°ƒç”¨getObjectåˆ›å»ºçš„å¯¹è±¡ï¼Œ2.è¦è·å–å·¥å‚Beanæœ¬èº«ï¼Œæˆ‘ä»¬éœ€è¦ç»™idå‰é¢åŠ ä¸€ä¸ª&
  * 	 * 			&colorFactoryBean
  * =================================================
  * CreateInfo:
@@ -30,37 +30,37 @@ import org.springframework.context.annotation.*;
  */
 @Configuration
 @ComponentScan(value = {"com.spring.annotation.dao"})
-@Import({annotationService.class, MyImportSelector.class, MyDefinitionRegistrar.class})
+@Import({AnnotationService.class, MyImportSelector.class, MyDefinitionRegistrar.class})
 public class MyConfiguration {
 
     /**
-     * *@Scope:µ÷Õû×÷ÓÃÓò
-     *    *@Scope("prototype")prototype£º¶àÊµÀıµÄ£ºiocÈİÆ÷Æô¶¯²¢²»»áÈ¥µ÷ÓÃ·½·¨´´½¨¶ÔÏó·ÅÔÚÈİÆ÷ÖĞ¡£
-     *                                   Ã¿´Î»ñÈ¡µÄÊ±ºò²Å»áµ÷ÓÃ·½·¨´´½¨¶ÔÏó£»
-     *    *@Scope("singleton")singleton£ºµ¥ÊµÀıµÄ£¨Ä¬ÈÏÖµ£©£ºiocÈİÆ÷Æô¶¯»áµ÷ÓÃ·½·¨´´½¨¶ÔÏó·Åµ½iocÈİÆ÷ÖĞ¡£
-     *         			ÒÔºóÃ¿´Î»ñÈ¡¾ÍÊÇÖ±½Ó´ÓÈİÆ÷£¨map.get()£©ÖĞÄÃ£¬
-     *        request£ºÍ¬Ò»´ÎÇëÇó´´½¨Ò»¸öÊµÀı
-     *        session£ºÍ¬Ò»¸ösession´´½¨Ò»¸öÊµÀı
+     * *@Scope:è°ƒæ•´ä½œç”¨åŸŸ
+     *    *@Scope("prototype")prototypeï¼šå¤šå®ä¾‹çš„ï¼šiocå®¹å™¨å¯åŠ¨å¹¶ä¸ä¼šå»è°ƒç”¨æ–¹æ³•åˆ›å»ºå¯¹è±¡æ”¾åœ¨å®¹å™¨ä¸­ã€‚
+     *                                   æ¯æ¬¡è·å–çš„æ—¶å€™æ‰ä¼šè°ƒç”¨æ–¹æ³•åˆ›å»ºå¯¹è±¡ï¼›
+     *    *@Scope("singleton")singletonï¼šå•å®ä¾‹çš„ï¼ˆé»˜è®¤å€¼ï¼‰ï¼šiocå®¹å™¨å¯åŠ¨ä¼šè°ƒç”¨æ–¹æ³•åˆ›å»ºå¯¹è±¡æ”¾åˆ°iocå®¹å™¨ä¸­ã€‚
+     *         			ä»¥åæ¯æ¬¡è·å–å°±æ˜¯ç›´æ¥ä»å®¹å™¨ï¼ˆmap.get()ï¼‰ä¸­æ‹¿ï¼Œ
+     *        requestï¼šåŒä¸€æ¬¡è¯·æ±‚åˆ›å»ºä¸€ä¸ªå®ä¾‹
+     *        sessionï¼šåŒä¸€ä¸ªsessionåˆ›å»ºä¸€ä¸ªå®ä¾‹
      * @return
      */
     @Scope
     @Bean
     public Person person(){
-        return new Person("ÕÅÈı",19);
+        return new Person("å¼ ä¸‰",19);
     }
 
     /**
-     * *@Conditional:Âú×ãÌõ¼ş¾Í½«¸øÈİÆ÷ÖĞ×¢²ábean
+     * *@Conditional:æ»¡è¶³æ¡ä»¶å°±å°†ç»™å®¹å™¨ä¸­æ³¨å†Œbean
      * @return
      */
     @Conditional(MyConditional.class)
     @Bean
     public Color color(){
-        return new Color();
+        return new Color("");
     }
 
     /**
-     * FactoryBean×¢²ábean£¬Õâ¸öbeanµÄÀàĞÍÊÇMonkey£¬getBeanÊÇÃû³ÆÇ°Ãæ¼Ó&¼°¿É»ñÈ¡ÎªmonkeyFactoryBean
+     * FactoryBeanæ³¨å†Œbeanï¼Œè¿™ä¸ªbeançš„ç±»å‹æ˜¯Monkeyï¼ŒgetBeanæ˜¯åç§°å‰é¢åŠ &åŠå¯è·å–ä¸ºmonkeyFactoryBean
      * @return
      */
     @Bean
